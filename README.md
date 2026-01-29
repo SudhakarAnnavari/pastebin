@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+1️⃣ Deployed URL
 
-## Getting Started
+This is the live link where your app is running.
+Since you deployed on Vercel, it will be something like:
 
-First, run the development server:
+https://pastebin-flax-six.vercel.app
 
-```bash
+
+Make sure:
+
+/ shows your UI to create a paste.
+
+/p/<id> works and shows the paste content.
+
+/api/pastes and /api/pastes/<id> work with proper JSON responses.
+
+Health check works: /api/healthz → returns { "ok": true }.
+
+2️⃣ Git repository URL
+
+Make sure your repository is public (or accessible to whoever is grading).
+Example:
+
+https://github.com/velicharlasrilekha/pastebin.git
+
+
+Check:
+
+All source code is committed (app/, lib/, components/, etc.)
+
+No secrets (Redis URL/token) are committed.
+
+README.md exists at the root.
+
+3️⃣ README.md content
+
+Create a short README (1–2 pages max) that explains:
+
+Example:
+# Pastebin-Lite
+
+A lightweight Pastebin clone built with Next.js and Redis. Users can create text pastes, receive a shareable link, and view them with optional TTL (expiry) and max view limits.
+
+## Features
+
+- Create a paste with arbitrary text
+- Optional time-based expiry (TTL)
+- Optional view-count limit
+- REST APIs for paste creation and retrieval
+- HTML page to view paste content safely
+- Deterministic expiry testing via `x-test-now-ms` header
+
+## Persistence Layer
+
+- Redis (Upstash) used for persistence
+- Ensures pastes survive serverless deployments
+
+## Running Locally
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/SudhakarAnnavari/pastebin-lite.git
+   cd pastebin-lite
+
+
+Install dependencies:
+
+npm install
+
+
+Add environment variables in .env.local:
+
+REDIS_URL=<your_upstash_redis_url>
+REDIS_TOKEN=<your_upstash_redis_token>
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+TEST_MODE=1
+
+
+Run the development server:
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Open http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Deployment
 
-## Learn More
+Deployed on Vercel: https://pastebin-flax-six.vercel.app
 
-To learn more about Next.js, take a look at the following resources:
+Design Decisions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Next.js App Router for server-side rendering of paste pages
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Redis (Upstash) for persistent key-value storage
 
-## Deploy on Vercel
+TTL and max views handled atomically in Redis
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+UI built with Tailwind CSS, simple and clean
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Added export const runtime = "nodejs" for serverless Redis support
